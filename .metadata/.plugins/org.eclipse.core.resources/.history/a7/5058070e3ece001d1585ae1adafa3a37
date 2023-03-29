@@ -1,0 +1,5 @@
+package com.bruna.demo.domain;
+
+public class Cidade {
+
+}
