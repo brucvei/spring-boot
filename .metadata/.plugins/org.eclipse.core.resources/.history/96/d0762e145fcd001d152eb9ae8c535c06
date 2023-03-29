@@ -1,0 +1,5 @@
+package com.bruna.demo.repositories;
+
+public class CategoriaRepository {
+
+}

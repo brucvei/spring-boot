@@ -1,0 +1,17 @@
+package com.bruna.demo.services;
+
+import org.springframework.stereotype.Service;
+
+import com.bruna.demo.domain.Categoria;
+import com.bruna.demo.repositories.CategoriaRepository;
+
+@Service
+public class CategoriaService {
+	
+	private CategoriaRepository;
+	
+	public Categoria buscar() {
+		
+	}
+
+}
