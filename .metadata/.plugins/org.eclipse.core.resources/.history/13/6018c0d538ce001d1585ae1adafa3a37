@@ -1,0 +1,5 @@
+package com.bruna.demo.resources.exception;
+
+public class ResourceExceptionHandler {
+
+}

@@ -1,0 +1,5 @@
+package com.bruna.demo.resources.exceptions;
+
+public class StandardError {
+
+}

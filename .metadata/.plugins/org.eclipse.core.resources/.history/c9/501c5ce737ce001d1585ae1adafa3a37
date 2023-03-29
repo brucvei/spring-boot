@@ -1,0 +1,5 @@
+package com.bruna.demo.services.exceptions;
+
+public class ObjectNotFoundException {
+
+}
