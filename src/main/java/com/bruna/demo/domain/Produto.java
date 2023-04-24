@@ -1,96 +1,109 @@
 package com.bruna.demo.domain;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.*;
 
 @Entity
-public class Produto implements Serializable  {
-	private static final long serialVersionUID = 1L;
+public class Produto implements Serializable {
+    private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private Integer id;
-	private String nome;
-	private Double preco;
-	
-	@JsonBackReference
-	@ManyToMany
-	@JoinTable(
-			name = "PRODUTO_CATEGORIA",
-			joinColumns = @JoinColumn(name = "idProduto"),
-			inverseJoinColumns = @JoinColumn(name = "idCategoria")
-		)
-	private List<Categoria> categorias = new ArrayList<>();
-	
-	public Produto() {}
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+    private String nome;
+    private Double preco;
 
-	public Produto(Integer id, String nome, Double preco) {
-		super();
-		this.id = id;
-		this.nome = nome;
-		this.preco = preco;
-	}
+    @JsonBackReference
+    @ManyToMany
+    @JoinTable(
+            name = "PRODUTO_CATEGORIA",
+            joinColumns = @JoinColumn(name = "idProduto"),
+            inverseJoinColumns = @JoinColumn(name = "idCategoria")
+    )
+    private List<Categoria> categorias = new ArrayList<>();
 
-	public Integer getId() {
-		return id;
-	}
+    @OneToMany(mappedBy = "id.produto")
+    private Set<ItemPedido> itens = new HashSet<>();
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
+    public Produto() {
+    }
 
-	public String getNome() {
-		return nome;
-	}
+    public Produto(Integer id, String nome, Double preco) {
+        super();
+        this.id = id;
+        this.nome = nome;
+        this.preco = preco;
+    }
 
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
+    public List<Pedido> getPedidos() {
+        List<Pedido> lista = new ArrayList<>();
+        for (ItemPedido x : itens) {
+            lista.add(x.getPedido());
+        }
+        return lista;
+    }
 
-	public Double getPreco() {
-		return preco;
-	}
+    public Integer getId() {
+        return id;
+    }
 
-	public void setPreco(Double preco) {
-		this.preco = preco;
-	}
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
-	public List<Categoria> getCategorias() {
-		return categorias;
-	}
+    public String getNome() {
+        return nome;
+    }
 
-	public void setCategorias(List<Categoria> categorias) {
-		this.categorias = categorias;
-	}
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
 
-	@Override
-	public int hashCode() {
-		return Objects.hash(id);
-	}
+    public Double getPreco() {
+        return preco;
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Produto other = (Produto) obj;
-		return Objects.equals(id, other.id);
-	};
-	
-	
+    public void setPreco(Double preco) {
+        this.preco = preco;
+    }
+
+    public List<Categoria> getCategorias() {
+        return categorias;
+    }
+
+    public void setCategorias(List<Categoria> categorias) {
+        this.categorias = categorias;
+    }
+
+    public Set<ItemPedido> getItens() {
+        return itens;
+    }
+
+    public void setItens(Set<ItemPedido> itens) {
+        this.itens = itens;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Produto other = (Produto) obj;
+        return Objects.equals(id, other.id);
+    }
+
+    ;
+
 }
