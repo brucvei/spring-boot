@@ -1,5 +1,7 @@
 package com.bruna.demo.resource;
 
+import com.bruna.demo.domain.Pedido;
+import com.bruna.demo.services.PedidoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -7,19 +9,16 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.bruna.demo.domain.Cliente;
-import com.bruna.demo.services.ClienteService;
-
 @RestController
-@RequestMapping(value="/clientes")
-public class ClienteResource {
-	
-	@Autowired
-	private ClienteService service;
+@RequestMapping(value="/pedidos")
+public class PedidoResource {
 
-	@GetMapping("/{id}")
-	public ResponseEntity<Cliente> listar(@PathVariable Integer id) {
-		Cliente obj = service.find(id);
-		return ResponseEntity.ok().body(obj);
-	}
+    @Autowired
+    private PedidoService service;
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Pedido> find(@PathVariable Integer id) {
+        Pedido obj = service.find(id);;
+        return ResponseEntity.ok().body(obj);
+    }
 }

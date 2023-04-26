@@ -1,11 +1,15 @@
 package com.bruna.demo.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.EmbeddedId;
+import jakarta.persistence.Entity;
 
 import java.util.Objects;
 
+@Entity
 public class ItemPedido {
 
+    @JsonIgnore
     @EmbeddedId
     private ItemPedidoPK id = new ItemPedidoPK();
 
@@ -25,6 +29,7 @@ public class ItemPedido {
         this.preco = preco;
     }
 
+    @JsonIgnore
     public Pedido getPedido() {
         return id.getPedido();
     }
@@ -33,6 +38,7 @@ public class ItemPedido {
         id.setPedido(pedido);
     }
 
+    @JsonIgnore
     public Produto getProduto() {
         return id.getProduto();
     }
