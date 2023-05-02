@@ -1,10 +1,15 @@
 package com.bruna.demo.services;
 
+import java.util.List;
 import java.util.Optional;
 
+import com.bruna.demo.dto.CategoriaDTO;
 import com.bruna.demo.services.exceptions.DataIntegrityException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.bruna.demo.domain.Categoria;
@@ -16,7 +21,11 @@ public class CategoriaService {
 	
 	@Autowired
 	private CategoriaRepository repo;
-	
+
+	public List<Categoria> findAll() {
+		return repo.findAll();
+	}
+
 	public Categoria find(Integer id) {
 		Optional<Categoria> obj = repo.findById(id);
 		return obj.orElseThrow(
@@ -47,4 +56,15 @@ public class CategoriaService {
 			);
 		}
 	}
+
+	public Page<Categoria> findPage(Integer page, Integer linesPerPage, String orderBy, String direction) {
+		return repo.findAll(PageRequest.of(
+				page, linesPerPage, Sort.Direction.valueOf(direction), orderBy
+		));
+	}
+
+	public Categoria fromDTO(CategoriaDTO obj) {
+		return new Categoria(obj.getId(), obj.getNome());
+	}
+
 }
