@@ -1,5 +1,6 @@
 package com.bruna.demo.resource;
 
+import com.bruna.demo.dto.CategoriaDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -9,6 +10,7 @@ import com.bruna.demo.services.CategoriaService;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.util.List;
 
 @RestController
 @RequestMapping(value="/categorias")
@@ -16,6 +18,13 @@ public class CategoriaResource {
 	
 	@Autowired
 	private CategoriaService service;
+
+	@GetMapping
+	public ResponseEntity<List<CategoriaDTO>> findAll() {
+		List<Categoria> list = service.findAll();
+		List<CategoriaDTO> listDTO = list.stream().map(CategoriaDTO::new).toList();
+		return ResponseEntity.ok().body(listDTO);
+	}
 
 	@GetMapping("/{id}")
 	public ResponseEntity<Categoria> find(@PathVariable Integer id) {

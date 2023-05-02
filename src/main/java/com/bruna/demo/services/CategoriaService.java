@@ -1,5 +1,6 @@
 package com.bruna.demo.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import com.bruna.demo.services.exceptions.DataIntegrityException;
@@ -16,7 +17,11 @@ public class CategoriaService {
 	
 	@Autowired
 	private CategoriaRepository repo;
-	
+
+	public List<Categoria> findAll() {
+		return repo.findAll();
+	}
+
 	public Categoria find(Integer id) {
 		Optional<Categoria> obj = repo.findById(id);
 		return obj.orElseThrow(
@@ -47,4 +52,5 @@ public class CategoriaService {
 			);
 		}
 	}
+
 }
