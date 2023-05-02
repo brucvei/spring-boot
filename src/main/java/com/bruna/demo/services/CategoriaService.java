@@ -2,13 +2,14 @@ package com.bruna.demo.services;
 
 import java.util.Optional;
 
+import com.bruna.demo.services.exceptions.DataIntegrityException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import com.bruna.demo.domain.Categoria;
 import com.bruna.demo.repositories.CategoriaRepository;
 import com.bruna.demo.services.exceptions.ObjectNotFoundException;
-
 
 @Service
 public class CategoriaService {
@@ -34,5 +35,16 @@ public class CategoriaService {
 	public Categoria update(Categoria obj) {
 		find(obj.getId());
 		return repo.save(obj);
+	}
+
+	public void delete(Integer id) {
+		find(id);
+		try {
+			repo.deleteById(id);
+		} catch (DataIntegrityViolationException e) {
+			throw new DataIntegrityException(
+					"Não é possível excluir uma categoria que possui produtos"
+			);
+		}
 	}
 }
