@@ -1,9 +1,9 @@
 package com.bruna.demo.resource;
 
+import com.bruna.demo.domain.*;
 import com.bruna.demo.domain.Cliente;
 import com.bruna.demo.domain.Cliente;
-import com.bruna.demo.domain.Cliente;
-import com.bruna.demo.dto.ClienteDTO;
+import com.bruna.demo.dto.*;
 import com.bruna.demo.dto.ClienteDTO;
 import com.bruna.demo.dto.ClienteDTO;
 import jakarta.validation.Valid;
@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.*;
 
 import com.bruna.demo.domain.Cliente;
 import com.bruna.demo.services.ClienteService;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -46,6 +48,15 @@ public class ClienteResource {
 		Page<Cliente> list = service.findPage(page, linesPerPage, orderBy, direction);
 		Page<ClienteDTO> listDTO = list.map(ClienteDTO::new);
 		return ResponseEntity.ok().body(listDTO);
+	}
+
+	@PostMapping
+	public ResponseEntity<Void> insert(@Valid @RequestBody ClienteNewDTO objDTO) {
+		Cliente obj = service.fromDTO(objDTO);
+		obj = service.insert(obj);
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+				.buildAndExpand(obj.getId()).toUri(); // pega a URI do novo recurso que foi inserido
+		return ResponseEntity.created(uri).build();
 	}
 
 	@PutMapping("/{id}")
