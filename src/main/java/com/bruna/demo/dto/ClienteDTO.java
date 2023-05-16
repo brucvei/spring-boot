@@ -1,12 +1,14 @@
 package com.bruna.demo.dto;
 
 import com.bruna.demo.domain.Cliente;
+import com.bruna.demo.services.validation.ClienteUpdate;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 
 import java.io.Serializable;
 
+@ClienteUpdate
 public class ClienteDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 
