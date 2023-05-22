@@ -2,11 +2,13 @@ package com.bruna.demo.domain;
 
 import com.bruna.demo.domain.enums.StatusPagamento;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import jakarta.persistence.Entity;
 
 import java.util.Date;
 
 @Entity
+@JsonTypeName("boleto")
 public class Boleto extends Pagamento {
     private static final long serialVersionUID = 1L;
 
